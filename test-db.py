@@ -8,7 +8,7 @@ print(f"Database path: {db_path}")
 print(f"Database exists: {db_path.exists()}")
 
 if not db_path.exists():
-    print("❌ Database file not found!")
+    print("ERROR: Database file not found!")
     exit(1)
 
 conn = sqlite3.connect(str(db_path))
@@ -17,10 +17,10 @@ cursor = conn.cursor()
 try:
     cursor.execute("SELECT COUNT(*) FROM Employees")
     count = cursor.fetchone()[0]
-    print(f"✅ Current employee count: {count}")
+    print(f"SUCCESS: Current employee count: {count}")
     
     if count == 0:
-        print("\n⚠️  Database is empty. Inserting sample data...")
+        print("\nWARNING: Database is empty. Inserting sample data...")
         
         employees = [
             ('Ahmed', 'Khan', 'Software Engineer'),
@@ -38,15 +38,15 @@ try:
             employees
         )
         conn.commit()
-        print(f"✅ Inserted {len(employees)} employee records")
+        print(f"SUCCESS: Inserted {len(employees)} employee records")
     
-    print("\n📋 Database contents:")
+    print("\nDatabase contents:")
     cursor.execute("SELECT ID, FirstName, LastName, Role FROM Employees ORDER BY LastName")
     rows = cursor.fetchall()
     for row in rows:
         print(f"  {row[0]}: {row[1]} {row[2]} - {row[3]}")
         
 except Exception as e:
-    print(f"❌ Error: {e}")
+    print(f"ERROR: {e}")
 finally:
     conn.close()

@@ -9,7 +9,7 @@ The project has three main parts:
 - ColdFusion backend API that serves the data
 - SQLite database that stores employee records
 
-## Project Structure
+## Project Structure (File Organization)
 
 ```
 team-directory/

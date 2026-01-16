@@ -8,23 +8,23 @@ console.log(`Database path: ${dbPath}`);
 
 const db = new sqlite3.Database(dbPath, (err) => {
     if (err) {
-        console.error('❌ Error connecting to database:', err.message);
+        console.error('ERROR: Error connecting to database:', err.message);
         process.exit(1);
     }
-    console.log('✅ Connected to database');
+    console.log('SUCCESS: Connected to database');
 });
 
 db.all('SELECT COUNT(*) as count FROM Employees', (err, rows) => {
     if (err) {
-        console.error('❌ Error querying Employees:', err.message);
+        console.error('ERROR: Error querying Employees:', err.message);
     } else {
-        console.log(`✅ Employee count: ${rows[0].count}`);
+        console.log(`SUCCESS: Employee count: ${rows[0].count}`);
         
         if (rows[0].count === 0) {
-            console.log('⚠️  Database is empty! Initializing with sample data...');
+            console.log('WARNING: Database is empty! Initializing with sample data...');
             initializeDatabase();
         } else {
-            console.log('\n✅ Sample employees:');
+            console.log('\nSUCCESS: Sample employees:');
             db.all('SELECT * FROM Employees LIMIT 5', (err, employees) => {
                 if (err) {
                     console.error(err);
@@ -58,13 +58,13 @@ function initializeDatabase() {
     });
 
     stmt.finalize(() => {
-        console.log(`✅ Inserted ${sampleEmployees.length} employee records`);
+        console.log(`SUCCESS: Inserted ${sampleEmployees.length} employee records`);
         
         db.all('SELECT * FROM Employees', (err, employees) => {
             if (err) {
                 console.error(err);
             } else {
-                console.log('\n✅ Database initialized! Current records:');
+                console.log('\nSUCCESS: Database initialized! Current records:');
                 console.table(employees);
             }
             db.close();
